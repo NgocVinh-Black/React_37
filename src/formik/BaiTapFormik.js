@@ -3,10 +3,11 @@ import React from "react";
 import * as Yup from "yup";
 import { validateUser } from "../util/validation ";
 import TableSV from "./TableSV";
-import { useDispatch } from "react-redux";
-import { getValueSV } from "../redux/slice/sinhVienSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getValueSV, updateSV } from "../redux/slice/sinhVienSlice";
 
 const BaiTapFormik = () => {
+  const { showError } = useSelector((state) => state.sinhVienSlice);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -21,8 +22,16 @@ const BaiTapFormik = () => {
     },
     validationSchema: validateUser,
   });
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    formik;
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+    setValues,
+    resetForm,
+  } = formik;
   return (
     <div>
       <h2 className="bg-gray-700 text-white px-3 py-3 text-2xl font-bold">
@@ -122,13 +131,29 @@ const BaiTapFormik = () => {
             </div>
             {/* Button */}
             <div>
+              <p
+                style={{
+                  display: "none",
+                }}
+                className="text-red-500"
+              >
+                {showError}
+              </p>
               <button
                 type="submit"
                 className="bg-blue-600 text-white py-2 px-4 rounded-md"
               >
                 Thêm sinh viên
               </button>
-              <button className="bg-green-600 text-white py-2 mt-1 px-4 rounded-md">
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(updateSV(values));
+                  resetForm();
+                }}
+                id="btnCapNhap"
+                className="bg-green-600 text-white py-2 mt-1 px-4 rounded-md hidden"
+              >
                 Cập nhập sinh viên
               </button>
             </div>
@@ -179,7 +204,7 @@ const BaiTapFormik = () => {
       </div>
       <div>
         {/* Table SV */}
-        <TableSV />
+        <TableSV setValues={setValues} />
       </div>
     </div>
   );
