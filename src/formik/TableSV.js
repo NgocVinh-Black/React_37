@@ -62,8 +62,16 @@ const TableSV = ({ setValues }) => {
                   <td className="px-6 py-4">{item.soDienThoaiSV}</td>
                   <td className="px-6 py-4">{item.emailSV}</td>
                   <td className="px-6 py-4 flex justify-center">
+                    {/* Edit */}
                     <button
                       onClick={() => {
+                        document.getElementById("btnCapNhap").style.display =
+                          "inline-block";
+                        document.getElementById("btnThem").style.display =
+                          "none";
+                        document.getElementById("daCoSV").style.display =
+                          "none";
+                        document.getElementById("maSV").disabled = true;
                         setValues(item);
                       }}
                     >
@@ -82,9 +90,12 @@ const TableSV = ({ setValues }) => {
                         />
                       </svg>
                     </button>
+                    {/* Delete */}
                     <button
                       onClick={() => {
                         dispatch(removeSV(item.maSV));
+                        document.getElementById("daCoSV").style.display =
+                          "none";
                       }}
                     >
                       <svg

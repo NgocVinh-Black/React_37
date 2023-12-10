@@ -17,6 +17,7 @@ const sinhVienSlice = createSlice({
         state.arrSinhVien.push(action.payload);
         state.showError = "";
       } else {
+        document.getElementById("daCoSV").style.display = "block"
         state.showError = "Sinh viên đã tồn tại";
       }
     },
