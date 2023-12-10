@@ -17,7 +17,7 @@ const sinhVienSlice = createSlice({
         state.arrSinhVien.push(action.payload);
         state.showError = "";
       } else {
-        document.getElementById("daCoSV").style.display = "block"
+        document.getElementById("daCoSV").style.display = "block";
         state.showError = "Sinh viên đã tồn tại";
       }
     },
@@ -37,6 +37,9 @@ const sinhVienSlice = createSlice({
         state.arrSinhVien[index] = action.payload;
       }
     },
+    // findMaSV: (state, action) => {
+    //   let arrSinhVienNew = [];
+    // },
   },
 });
 
