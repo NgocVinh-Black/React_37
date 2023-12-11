@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeSV } from "../redux/slice/sinhVienSlice";
+import { removeVietnameseTones } from "../util/validationSearch";
 
 const TableSV = ({ setValues }) => {
   const [search, setSearch] = useState("");
@@ -8,6 +9,8 @@ const TableSV = ({ setValues }) => {
     return state.sinhVienSlice;
   });
   const dispatch = useDispatch();
+  // let name = _formatString("Lê Ngọc Vinh");
+  // console.log(name);
   return (
     <div className="mt-5">
       {/* Find */}
@@ -91,9 +94,13 @@ const TableSV = ({ setValues }) => {
           <tbody>
             {arrSinhVien
               .filter((item) => {
+                const newHoTen = removeVietnameseTones(
+                  item.hoTenSV.toLowerCase()
+                );
+                const newSearch = removeVietnameseTones(search.toLowerCase());
                 return search.toLowerCase() === ""
                   ? item
-                  : item.hoTenSV.toLowerCase().includes(search);
+                  : newHoTen.includes(newSearch);
               })
               .map((item, index) => (
                 <tr key={index} className="bg-white border-b">
